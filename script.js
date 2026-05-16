@@ -28,9 +28,9 @@
    ────────────────────────────────────────────────────── */
 
 // 🔧 CHANGE: Update this if you add more pages to HTML
-const TOTAL_PAGES = 5;
+const TOTAL_PAGES = 5;   // pages are numbered 0–5
 
-let currentPage = 1;   // starts on page 1 (landing)
+let currentPage = 0;   // starts on page 0 (countdown)
 
 /**
  * Navigate to a specific page number.
@@ -38,8 +38,8 @@ let currentPage = 1;   // starts on page 1 (landing)
  * @param {number} pageNum — the page to show (1 to TOTAL_PAGES)
  */
 function goToPage(pageNum) {
-  // Bounds check
-  if (pageNum < 1 || pageNum > TOTAL_PAGES) return;
+  // Bounds check — pages 0 to TOTAL_PAGES
+  if (pageNum < 0 || pageNum > TOTAL_PAGES) return;
 
   // Hide old page
   const oldPage = document.getElementById(`page${currentPage}`);
@@ -372,16 +372,89 @@ function typeMessage() {
    Runs when the page first loads.
    ────────────────────────────────────────────────────── */
 
-// Make sure page 1 is shown on load
 document.addEventListener('DOMContentLoaded', () => {
-  // Activate page 1
-  const p1 = document.getElementById('page1');
-  if (p1) p1.classList.add('active');
+  // Activate page 0 (countdown) on load
+  const p0 = document.getElementById('page0');
+  if (p0) p0.classList.add('active');
 
-  // Spawn an initial burst of background hearts immediately
+  // Spawn initial burst of background hearts
   for (let i = 0; i < 8; i++) {
     setTimeout(spawnHeart, i * 300);
   }
 
+  // Start the live countdown
+  startCountdown();
+
   console.log('🌸 Happy Birthday Hamna! Website loaded ✨');
 });
+
+
+/* ──────────────────────────────────────────────────────
+   COUNTDOWN TIMER — PAGE 0
+   ──────────────────────────────────────────────────────
+   Counts down to Hamna's birthday: May 24 PST
+   🔧 CHANGE: Edit BIRTHDAY_DATE string to a different date
+              Format: 'YYYY-MM-DDTHH:MM:SS-HH:MM'
+              -08:00 = PST, -07:00 = PDT
+   ────────────────────────────────────────────────────── */
+
+// 🔧 CHANGE: Set Hamna's birthday date & timezone here
+// +05:00 = Pakistan Standard Time (PKT)
+const BIRTHDAY_DATE = '2026-05-24T00:00:00+05:00';
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+/**
+ * Animate the number pop when a digit changes.
+ * @param {string} id — element id
+ */
+function popNum(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('tick-pop');
+  void el.offsetWidth;    // force reflow to restart animation
+  el.classList.add('tick-pop');
+  setTimeout(() => el.classList.remove('tick-pop'), 180);
+}
+
+/**
+ * Update countdown display every second.
+ * Shows birthday message when time runs out.
+ */
+function tickCountdown() {
+  const target = new Date(BIRTHDAY_DATE);
+  const now    = new Date();
+  const diff   = target - now;
+
+  if (diff <= 0) {
+    // Birthday has arrived!
+    document.getElementById('countdownGrid').classList.add('hidden');
+    document.getElementById('birthdayArrived').classList.remove('hidden');
+    return;
+  }
+
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000)  / 60000);
+  const secs  = Math.floor((diff % 60000)    / 1000);
+
+  const updates = [
+    ['cdDays',  pad2(days)],
+    ['cdHours', pad2(hours)],
+    ['cdMins',  pad2(mins)],
+    ['cdSecs',  pad2(secs)],
+  ];
+
+  for (const [id, val] of updates) {
+    const el = document.getElementById(id);
+    if (el && el.textContent !== val) {
+      el.textContent = val;
+      popNum(id);
+    }
+  }
+}
+
+function startCountdown() {
+  tickCountdown();                      // run immediately
+  setInterval(tickCountdown, 1000);     // then every second
+}
