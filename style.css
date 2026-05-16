@@ -3,18 +3,25 @@
    ════════════════════════════════════════════════════════
 
    TABLE OF CONTENTS:
-   1. CSS Variables (colors, fonts — change here globally)
-   2. Reset & Base
-   3. Confetti Canvas
-   4. Floating Hearts Background
-   5. Page System (show/hide pages)
-   6. PAGE 1 — Welcome / Landing
-   7. PAGE 2 — Birthday Message Card
-   8. PAGE 3 — Photo Gallery Section
-   9. PAGE 4 — Interactive Cake Styles
-   10. PAGE 5 — Final Closing Page
-   11. Shared Components (buttons, cards, nav)
-   12. Animations & Keyframes
+   1.  CSS Variables
+   2.  Reset & Base
+   3.  Confetti Canvas
+   4.  Floating Hearts Background
+   5.  Page System
+   6.  Page 0 — Countdown
+   7.  Page 1 — Welcome / Landing
+   8.  Cards (shared)
+   9.  Paragraph Section
+   10. Photo Gallery
+   11. GIF Strip
+   12. Cake Styles
+   13. Final Page
+   14. Shared Components (buttons, nav)
+   15. Animations
+   16. RESPONSIVE — Mobile  (max 480px)
+   17. RESPONSIVE — Tablet  (481–768px)
+   18. RESPONSIVE — Laptop  (769px+)
+   19. RESPONSIVE — Ultra-wide (1200px+)
 
    ════════════════════════════════════════════════════════ */
 
@@ -24,712 +31,613 @@
    🔧 CHANGE: Edit colors here to retheme the whole site
    ────────────────────────────────────────────────────── */
 :root {
-  /* Pink palette */
-  --pink-light:  #ffe4f0;   /* very light pink background tint */
-  --pink-soft:   #ffb6d9;   /* soft mid pink                   */
-  --pink-main:   #ff69b4;   /* hot pink — main accent           */
-  --pink-deep:   #e91e8c;   /* deep magenta — for headings      */
-  --pink-rose:   #f48fb1;   /* rose tone                        */
-
-  /* Supporting colors */
-  --cream:       #fff5f9;   /* creamy white for card bg         */
-  --gold:        #ffd700;   /* candle flame / gold accents      */
-  --purple-soft: #e1bee7;   /* subtle purple complement         */
-
-  /* Text */
-  --text-dark:   #4a1942;   /* dark purple-pink for body text   */
-  --text-mid:    #7b3f6e;   /* medium for subtitles             */
-  --white:       #ffffff;
-
-  /* Cake layers — change these to restyle the cake -->
-  --cake-top:    #ffb6d9;   /* top tier color                   */
-  --cake-mid:    #ff69b4;   /* middle tier color                */
-  --cake-bot:    #e91e8c;   /* bottom tier color                */
-  --cake-frost:  #fff5f9;   /* frosting drip color              */
-
-  /* Gradients */
-  --grad-bg:  linear-gradient(135deg, #ffe4f0 0%, #ffd6ec 50%, #ffe8f5 100%);
-  --grad-btn: linear-gradient(135deg, #ff69b4, #e91e8c);
-  --grad-card: linear-gradient(160deg, #fff0f7, #fff5fb);
-
-  /* Fonts */
-  --font-display: 'Pacifico', cursive;     /* headings             */
-  --font-body:    'Nunito', sans-serif;    /* all body text        */
-
-  /* Spacing & Radius */
-  --radius-card: 28px;
-  --radius-btn:  50px;
-  --shadow-card: 0 12px 48px rgba(233,30,140,0.15), 0 2px 12px rgba(0,0,0,0.06);
+  --pink-light:   #ffe4f0;
+  --pink-soft:    #ffb6d9;
+  --pink-main:    #ff69b4;
+  --pink-deep:    #e91e8c;
+  --pink-rose:    #f48fb1;
+  --cream:        #fff5f9;
+  --gold:         #ffd700;
+  --text-dark:    #4a1942;
+  --text-mid:     #7b3f6e;
+  --white:        #ffffff;
+  --cake-top:     #ffb6d9;
+  --cake-mid:     #ff69b4;
+  --cake-bot:     #e91e8c;
+  --cake-frost:   #fff5f9;
+  --grad-bg:      linear-gradient(135deg, #ffe4f0 0%, #ffd6ec 50%, #ffe8f5 100%);
+  --grad-btn:     linear-gradient(135deg, #ff69b4, #e91e8c);
+  --grad-card:    linear-gradient(160deg, #fff0f7, #fff5fb);
+  --font-display: 'Pacifico', cursive;
+  --font-body:    'Nunito', sans-serif;
+  --radius-card:  28px;
+  --radius-btn:   50px;
+  --shadow-card:  0 12px 48px rgba(233,30,140,0.15), 0 2px 12px rgba(0,0,0,0.06);
 }
 
 
 /* ──────────────────────────────────────────────────────
    2. RESET & BASE
    ────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  height: 100%;
-  overflow: hidden;            /* hide scrollbars; pages stack */
-}
+html { height: 100%; }
 
 body {
   font-family: var(--font-body);
   background: var(--grad-bg);
+  background-attachment: fixed;
   color: var(--text-dark);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-img {
-  max-width: 100%;
-  display: block;
-}
+img { max-width: 100%; display: block; }
 
 
 /* ──────────────────────────────────────────────────────
    3. CONFETTI CANVAS
-   Fixed on top of everything, pointer-events off
    ────────────────────────────────────────────────────── */
 #confetti-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1000;
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 1000;
 }
 
 
 /* ──────────────────────────────────────────────────────
    4. FLOATING HEARTS BACKGROUND
-   JS spawns .heart elements inside #heartsBg
-   🔧 CHANGE: Edit heart emoji / size in script.js
    ────────────────────────────────────────────────────── */
 .hearts-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
 }
-
 .heart {
-  position: absolute;
-  bottom: -60px;
+  position: absolute; bottom: -60px;
   font-size: 1.4rem;
   animation: floatHeart linear infinite;
-  opacity: 0;
-  user-select: none;
+  opacity: 0; user-select: none;
 }
-
 @keyframes floatHeart {
-  0%   { transform: translateY(0) rotate(0deg);   opacity: 0;   }
+  0%   { transform: translateY(0) rotate(0deg);       opacity: 0;   }
   10%  { opacity: 0.7; }
   80%  { opacity: 0.5; }
-  100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+  100% { transform: translateY(-110vh) rotate(25deg); opacity: 0;   }
 }
 
 
 /* ──────────────────────────────────────────────────────
    5. PAGE SYSTEM
-   Each <section class="page"> is hidden by default.
-   JS adds class 'active' to show it.
-   Transition: fade + slight slide up
+   Pages stack with position:fixed; JS toggles .active
+   overflow-y:auto allows scrolling on small screens
    ────────────────────────────────────────────────────── */
 .page {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.22,1,.36,1);
-  overflow-y: auto;
+  padding: 24px 16px 32px;
+  opacity: 0; pointer-events: none;
+  transform: translateY(28px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.22,1,.36,1);
+  overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   z-index: 10;
 }
+.page.active { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-.page.active {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateY(0);
+/* Vertically center on tall-enough screens */
+@media (min-height: 680px) {
+  .page { align-items: center; }
 }
 
 
 /* ──────────────────────────────────────────────────────
-   6. PAGE 1 — WELCOME / LANDING
+   6. PAGE 0 — COUNTDOWN
+   ────────────────────────────────────────────────────── */
+.hero-bear-gif {
+  width: 150px; height: 150px;
+  border-radius: 50%; object-fit: cover;
+  border: 4px solid var(--pink-main);
+  margin: 0 auto 16px; display: block;
+  box-shadow: 0 6px 28px rgba(255,105,180,0.4);
+  animation: bounceSoft 2.2s ease-in-out infinite;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%; max-width: 360px;
+  margin: 0 auto 20px;
+}
+
+.cd-box {
+  background: linear-gradient(145deg, #ffe4f0, #ffd6ec);
+  border: 2px solid var(--pink-soft);
+  border-radius: 16px;
+  padding: 12px 4px 9px;
+  position: relative; overflow: hidden; text-align: center;
+}
+.cd-box::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad-btn);
+  border-radius: 16px 16px 0 0;
+}
+.cd-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+  color: var(--pink-deep); line-height: 1; margin-bottom: 4px;
+  transition: transform 0.15s ease;
+}
+.cd-num.tick-pop { transform: scale(1.2); }
+.cd-label {
+  font-size: clamp(0.58rem, 1.8vw, 0.68rem);
+  font-weight: 800; color: var(--text-mid);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.birthday-arrived {
+  font-family: var(--font-display);
+  font-size: 1.1rem; color: var(--pink-deep);
+  margin-bottom: 16px;
+  animation: fadeSlideUp 0.7s ease both;
+}
+.hidden { display: none !important; }
+
+
+/* ──────────────────────────────────────────────────────
+   7. PAGE 1 — WELCOME / LANDING
    ────────────────────────────────────────────────────── */
 .page1-content {
-  text-align: center;
-  max-width: 520px;
-  width: 100%;
+  text-align: center; max-width: 520px; width: 100%;
   animation: fadeSlideUp 0.8s ease both;
 }
-
-/* Milk & mocha GIF row at top */
-/* 🔧 CHANGE: adjust .gif-row gap or .deco-gif size here */
 .gif-row {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 28px;
+  display: flex; justify-content: center;
+  gap: 18px; margin-bottom: 22px; flex-wrap: wrap;
 }
-
 .deco-gif {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 100px; height: 100px;
+  border-radius: 50%; object-fit: cover;
   border: 4px solid var(--pink-main);
   box-shadow: 0 6px 24px rgba(255,105,180,0.35);
   animation: bounceSoft 2.5s ease-in-out infinite;
+  flex-shrink: 0;
 }
-
-.deco-gif:nth-child(2) {
-  animation-delay: 0.4s;     /* stagger the bounce */
-}
-
-@keyframes bounceSoft {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
-}
+.deco-gif:nth-child(2) { animation-delay: 0.4s; }
 
 .welcome-title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  font-size: clamp(1.9rem, 5.5vw, 3.2rem);
   color: var(--pink-deep);
-  text-shadow: 0 3px 12px rgba(233,30,140,0.25);
-  margin-bottom: 10px;
+  text-shadow: 0 3px 12px rgba(233,30,140,0.2);
+  margin-bottom: 10px; line-height: 1.2;
 }
-
 .welcome-sub {
-  font-size: 1.1rem;
-  color: var(--text-mid);
-  font-weight: 600;
-  margin-bottom: 22px;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--text-mid); font-weight: 600; margin-bottom: 20px;
 }
-
-/* Animated emoji hearts row */
 .heart-row {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  font-size: 1.5rem;
-  margin-bottom: 28px;
+  display: flex; justify-content: center;
+  gap: 10px; font-size: 1.4rem;
+  margin-bottom: 24px; flex-wrap: wrap;
 }
-
-.heart-row span {
-  display: inline-block;
-  animation: heartBeat 1.6s ease-in-out infinite;
-}
-
-/* Stagger each heart beat */
-.heart-row span:nth-child(1) { animation-delay: 0s;    }
-.heart-row span:nth-child(2) { animation-delay: 0.2s;  }
-.heart-row span:nth-child(3) { animation-delay: 0.4s;  }
-.heart-row span:nth-child(4) { animation-delay: 0.6s;  }
-.heart-row span:nth-child(5) { animation-delay: 0.8s;  }
-
-@keyframes heartBeat {
-  0%, 100% { transform: scale(1); }
-  30%       { transform: scale(1.25); }
-  60%       { transform: scale(0.95); }
-}
-
+.heart-row span { display: inline-block; animation: heartBeat 1.6s ease-in-out infinite; }
+.heart-row span:nth-child(1) { animation-delay: 0s;   }
+.heart-row span:nth-child(2) { animation-delay: 0.2s; }
+.heart-row span:nth-child(3) { animation-delay: 0.4s; }
+.heart-row span:nth-child(4) { animation-delay: 0.6s; }
+.heart-row span:nth-child(5) { animation-delay: 0.8s; }
 .hint-text {
-  margin-top: 14px;
-  font-size: 0.88rem;
-  color: var(--pink-main);
-  opacity: 0.8;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  margin-top: 12px; font-size: 0.85rem;
+  color: var(--pink-main); opacity: 0.8; font-weight: 700; letter-spacing: 0.5px;
 }
 
 
 /* ──────────────────────────────────────────────────────
-   7. CARD (shared between page 2, 4, 5)
+   8. CARDS
    ────────────────────────────────────────────────────── */
 .card {
   background: var(--grad-card);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   border: 2px solid var(--pink-soft);
-  padding: 36px 32px 28px;
-  max-width: 460px;
-  width: 100%;
-  text-align: center;
-  position: relative;
+  padding: 28px 22px 24px;
+  max-width: 460px; width: 100%;
+  text-align: center; position: relative;
   animation: fadeSlideUp 0.7s ease both;
 }
-
-/* Wider card for the photo grid page */
-.wide-card {
-  max-width: 700px;
-}
-
-/* GIF shown inside card (top of page 2 & 5) */
-/* 🔧 CHANGE: adjust size of the card top gif */
+.wide-card { max-width: 680px; }
 .card-gif {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 110px; height: 110px;
+  border-radius: 50%; object-fit: cover;
   border: 4px solid var(--pink-main);
-  margin: 0 auto 20px;
+  margin: 0 auto 18px;
   box-shadow: 0 4px 20px rgba(255,105,180,0.4);
 }
-
 .card-title {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  color: var(--pink-deep);
-  line-height: 1.25;
-  margin-bottom: 6px;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: var(--pink-deep); line-height: 1.25; margin-bottom: 6px;
 }
-
-/* Highlighted name "Hamna" in heading */
-/* 🔧 CHANGE: adjust color / font here */
 .name-highlight {
   color: var(--pink-main);
   text-shadow: 0 2px 10px rgba(255,105,180,0.4);
 }
-
 .section-sub {
-  font-size: 0.95rem;
-  color: var(--text-mid);
-  font-weight: 600;
-  margin-bottom: 22px;
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  color: var(--text-mid); font-weight: 600; margin-bottom: 18px;
 }
 
 
 /* ──────────────────────────────────────────────────────
-   8. PARAGRAPH SECTION (page 2 + page 5)
-   🔧 CHANGE: edit .bday-para font-size or color here
+   9. PARAGRAPH SECTION
    ────────────────────────────────────────────────────── */
 .paragraph-section {
   background: rgba(255,182,217,0.18);
   border: 1.5px solid var(--pink-soft);
   border-radius: 18px;
-  padding: 20px 22px;
-  margin-bottom: 24px;
-  text-align: left;
+  padding: 18px; margin-bottom: 22px; text-align: left;
 }
-
 .bday-para {
-  font-size: 0.97rem;
-  color: var(--text-dark);
-  line-height: 1.75;
-  margin-bottom: 12px;
+  font-size: clamp(0.88rem, 2.2vw, 0.97rem);
+  color: var(--text-dark); line-height: 1.75; margin-bottom: 12px;
 }
-
 .bday-para:last-child { margin-bottom: 0; }
-
-.bday-para strong {
-  color: var(--pink-deep);
-  font-weight: 800;
-}
-
-/* Final page paragraph uses slightly larger text */
-.final-para {
-  font-size: 1.04rem;
-  text-align: center;
-}
+.bday-para strong { color: var(--pink-deep); font-weight: 800; }
+.final-para { text-align: center; }
 
 
 /* ──────────────────────────────────────────────────────
-   9. PHOTO GALLERY — PAGE 3
-   🔧 CHANGE: add/remove .photo-item blocks in HTML
-              change grid columns below (default: 2x2)
+   10. PHOTO GALLERY
+   🔧 CHANGE: grid columns below (default 2 cols mobile, 4 cols desktop)
    ────────────────────────────────────────────────────── */
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);   /* 🔧 CHANGE columns here */
-  gap: 16px;
-  margin-bottom: 26px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px; margin-bottom: 20px;
 }
-
 .photo-item {
   background: var(--pink-light);
-  border-radius: 18px;
-  overflow: hidden;
+  border-radius: 16px; overflow: hidden;
   border: 2px solid var(--pink-soft);
-  box-shadow: 0 4px 16px rgba(255,105,180,0.18);
+  box-shadow: 0 4px 16px rgba(255,105,180,0.15);
   transition: transform 0.25s, box-shadow 0.25s;
-  cursor: default;
 }
-
 .photo-item:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(255,105,180,0.3);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(255,105,180,0.28);
 }
-
-.photo-item img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;       /* crop to fill the box */
-  display: block;
-}
-
+.photo-item img { width: 100%; height: 130px; object-fit: cover; display: block; }
 .photo-caption {
-  padding: 8px 10px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--text-mid);
-  text-align: center;
+  padding: 7px 8px;
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  font-weight: 700; color: var(--text-mid); text-align: center;
 }
 
 
 /* ──────────────────────────────────────────────────────
-   10. CAKE STYLES — PAGE 4
-   🔧 CHANGE: cake tier colors via CSS variables at top
-              or directly change --cake-top/mid/bot here
+   11. MILK & MOCHA GIF STRIP
    ────────────────────────────────────────────────────── */
+.gif-strip {
+  display: flex; justify-content: center;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.gif-strip-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.gif-strip-item img {
+  width: 80px; height: 80px;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--pink-main);
+  box-shadow: 0 4px 14px rgba(255,105,180,0.28);
+  transition: transform 0.25s;
+}
+.gif-strip-item img:hover { transform: scale(1.1) rotate(-3deg); }
+.gif-strip-label { font-size: 0.75rem; font-weight: 700; color: var(--text-mid); text-align: center; }
+.gif-strip-final .gif-strip-item img { width: 100px; height: 100px; }
 
-/* Wrapper — clicking this triggers blowCandles() */
+
+/* ──────────────────────────────────────────────────────
+   12. CAKE STYLES
+   🔧 CHANGE: cake tier colors via variables at top
+   ────────────────────────────────────────────────────── */
 .cake-container {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 10px auto 24px;
-  width: fit-content;
-  transition: transform 0.2s;
+  cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; margin: 8px auto 20px;
+  width: fit-content; transition: transform 0.2s;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
+.cake-container:hover  { transform: scale(1.04); }
+.cake-container:active { transform: scale(0.97); }
 
-.cake-container:hover {
-  transform: scale(1.04);
-}
-
-/* ── CANDLES ROW ── */
-.candles-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 4px;
-  justify-content: center;
-}
-
+.candles-row { display: flex; gap: 9px; margin-bottom: 4px; justify-content: center; }
 .candle {
-  width: 10px;
-  height: 30px;
-  border-radius: 5px;
-  /* Alternating candy-stripe colors */
+  width: 10px; height: 28px; border-radius: 5px;
   background: repeating-linear-gradient(
-    to bottom,
-    #ff69b4 0px, #ff69b4 6px,
-    #fff    6px, #fff    12px
+    to bottom, #ff69b4 0px, #ff69b4 6px, #fff 6px, #fff 12px
   );
-  display: flex;
-  justify-content: center;
-  position: relative;
+  display: flex; justify-content: center; position: relative;
 }
-
-/* Candle flame */
 .flame {
-  position: absolute;
-  top: -18px;
-  width: 12px;
-  height: 18px;
-  background: radial-gradient(ellipse at 50% 100%,
-    #fff 0%, var(--gold) 35%, #ff8c00 75%);
+  position: absolute; top: -17px; width: 12px; height: 17px;
+  background: radial-gradient(ellipse at 50% 100%, #fff 0%, var(--gold) 35%, #ff8c00 75%);
   border-radius: 50% 50% 30% 30%;
   animation: flicker 0.5s ease-in-out infinite alternate;
   filter: blur(0.4px);
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
-
-/* Flame flicker animation */
 @keyframes flicker {
   from { transform: scaleX(1)    scaleY(1)    rotate(-2deg); opacity: 1;    }
   to   { transform: scaleX(0.82) scaleY(1.12) rotate( 3deg); opacity: 0.88; }
 }
+.flame.blown { opacity: 0 !important; transform: scaleY(0); }
 
-/* When candle is blown: flame fades and shrinks */
-.flame.blown {
-  opacity: 0 !important;
-  transform: scaleY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Smoke puff after blow */
 .smoke {
-  position: absolute;
-  top: -30px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(200,200,200,0.6);
-  animation: smokeUp 1.2s ease forwards;
-  pointer-events: none;
+  position: absolute; top: -28px; width: 8px; height: 8px;
+  border-radius: 50%; background: rgba(200,200,200,0.6);
+  animation: smokeUp 1.2s ease forwards; pointer-events: none;
 }
-
 @keyframes smokeUp {
-  0%   { transform: translateY(0) scale(1);   opacity: 0.8; }
-  100% { transform: translateY(-30px) scale(2); opacity: 0; }
+  0%   { transform: translateY(0) scale(1);    opacity: 0.8; }
+  100% { transform: translateY(-28px) scale(2); opacity: 0;   }
 }
 
-/* ── CAKE BODY ── */
-.cake-body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Shared layer style */
-.cake-layer {
-  border-radius: 12px;
-  position: relative;
-  margin-top: 3px;
-}
-
-.layer-top {
-  width: 90px;
-  height: 28px;
-  background: linear-gradient(135deg, var(--cake-top), #ff9edd);
-  order: 1;
-}
-
-.layer-mid {
-  width: 120px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--cake-mid), #ff45a7);
-  order: 2;
-}
-
-.layer-bot {
-  width: 150px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--cake-bot), #c2005e);
-  order: 3;
-}
-
-/* White frosting drip on each layer */
+.cake-body { position: relative; display: flex; flex-direction: column; align-items: center; }
+.cake-layer { border-radius: 10px; position: relative; margin-top: 3px; }
+.layer-top { width: 86px;  height: 26px; background: linear-gradient(135deg, var(--cake-top), #ff9edd); order: 1; }
+.layer-mid { width: 114px; height: 30px; background: linear-gradient(135deg, var(--cake-mid), #ff45a7); order: 2; }
+.layer-bot { width: 142px; height: 34px; background: linear-gradient(135deg, var(--cake-bot), #c2005e); order: 3; }
 .frosting {
-  position: absolute;
-  top: -5px;
-  left: 10px;
-  right: 10px;
-  height: 10px;
-  background: var(--cake-frost);
-  border-radius: 50%;
-  opacity: 0.85;
+  position: absolute; top: -5px; left: 10px; right: 10px;
+  height: 10px; background: var(--cake-frost); border-radius: 50%; opacity: 0.85;
 }
-
-/* Decorative emoji row on bottom layer */
-.dots {
-  position: absolute;
-  bottom: 6px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  order: 3;
-}
-
-/* Plate under the cake */
+.dots { position: absolute; bottom: 5px; left: 0; right: 0; text-align: center; font-size: 0.7rem; letter-spacing: 2px; order: 3; }
 .cake-plate {
-  width: 180px;
-  height: 14px;
+  width: 170px; height: 13px;
   background: linear-gradient(135deg, #f8bbd0, #f48fb1);
-  border-radius: 50%;
-  margin-top: 2px;
-  box-shadow: 0 4px 12px rgba(255,105,180,0.3);
+  border-radius: 50%; margin-top: 2px;
+  box-shadow: 0 4px 10px rgba(255,105,180,0.28);
 }
+.cake-hint { margin-top: 9px; font-size: 0.82rem; color: var(--pink-main); font-weight: 700; transition: opacity 0.4s; }
 
-/* Click hint */
-.cake-hint {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  color: var(--pink-main);
-  font-weight: 700;
-  transition: opacity 0.4s;
-}
-
-/* ── TYPED BIRTHDAY MESSAGE ────────────────────────────
-   Appears letter by letter after candles blown
-   🔧 CHANGE: font size / color here
-   ──────────────────────────────────────────────────── */
 .typed-message-wrap {
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+  min-height: 52px; display: flex; align-items: center;
+  justify-content: center; margin-bottom: 14px; padding: 0 8px;
 }
-
 .typed-message {
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  color: var(--pink-deep);
-  text-align: center;
-  line-height: 1.5;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: var(--pink-deep); text-align: center; line-height: 1.5;
 }
-
-/* Final GIF shown after typing finishes */
 .final-gif {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--pink-main);
-  margin: 0 auto 16px;
-  transition: opacity 0.6s;
+  width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--pink-main); margin: 0 auto 14px; transition: opacity 0.6s;
 }
-
 .final-gif.hidden { opacity: 0; pointer-events: none; }
 
 
 /* ──────────────────────────────────────────────────────
-   MILK & MOCHA GIF STRIP
-   Horizontal row of GIFs shown on pages 3 & 5
-   🔧 CHANGE: adjust .gif-strip-item width to resize GIFs
-   ────────────────────────────────────────────────────── */
-.gif-strip {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.gif-strip-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-/* 🔧 CHANGE: width controls GIF size in the strip */
-.gif-strip-item img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--pink-main);
-  box-shadow: 0 4px 16px rgba(255,105,180,0.3);
-  transition: transform 0.25s;
-}
-
-.gif-strip-item img:hover {
-  transform: scale(1.1) rotate(-3deg);
-}
-
-.gif-strip-label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--text-mid);
-  text-align: center;
-}
-
-/* Final page gif strip — slightly bigger */
-.gif-strip-final .gif-strip-item img {
-  width: 110px;
-  height: 110px;
-}
-
-
-
+   13. FINAL PAGE
    ────────────────────────────────────────────────────── */
 .fireworks-row {
-  font-size: 1.4rem;
-  letter-spacing: 4px;
-  margin: 16px 0;
+  font-size: clamp(1rem, 3.5vw, 1.4rem);
+  letter-spacing: 3px; margin: 14px 0;
   animation: pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.08); }
+  word-break: break-all;
 }
 
 
 /* ──────────────────────────────────────────────────────
-   SHARED COMPONENTS
+   14. SHARED COMPONENTS — BUTTONS & NAV
    ────────────────────────────────────────────────────── */
-
-/* ── MAIN BUTTON ──
-   🔧 CHANGE: gradient colors via --grad-btn variable
-   ────────────────── */
 .btn-main {
-  background: var(--grad-btn);
-  color: var(--white);
-  border: none;
-  border-radius: var(--radius-btn);
-  padding: 14px 34px;
+  background: var(--grad-btn); color: var(--white);
+  border: none; border-radius: var(--radius-btn);
+  padding: 13px 30px;
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 800;
-  cursor: pointer;
-  letter-spacing: 0.4px;
-  box-shadow: 0 6px 24px rgba(233,30,140,0.4);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  font-weight: 800; cursor: pointer; letter-spacing: 0.4px;
+  box-shadow: 0 6px 22px rgba(233,30,140,0.38);
   transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-
-.btn-main:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 10px 32px rgba(233,30,140,0.55);
-  filter: brightness(1.08);
-}
-
+.btn-main:hover  { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 30px rgba(233,30,140,0.52); filter: brightness(1.07); }
 .btn-main:active { transform: scale(0.97); }
 
-/* ── BACK BUTTON ── */
 .btn-back {
   background: transparent;
-  border: 2px solid var(--pink-rose);
-  color: var(--pink-deep);
+  border: 2px solid var(--pink-rose); color: var(--pink-deep);
   border-radius: var(--radius-btn);
-  padding: 12px 26px;
+  padding: 11px 22px;
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
+  font-size: clamp(0.82rem, 2.2vw, 0.95rem);
+  font-weight: 700; cursor: pointer;
   transition: background 0.2s, transform 0.18s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
+.btn-back:hover { background: var(--pink-light); transform: translateY(-2px); }
 
-.btn-back:hover {
-  background: var(--pink-light);
-  transform: translateY(-2px);
-}
-
-/* ── NAV BUTTONS ROW ── */
 .nav-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  display: flex; gap: 10px; justify-content: center;
+  flex-wrap: wrap; margin-top: 18px;
 }
 
 
 /* ──────────────────────────────────────────────────────
-   12. SHARED ANIMATIONS
+   15. ANIMATIONS
    ────────────────────────────────────────────────────── */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(40px); }
+  from { opacity: 0; transform: translateY(36px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
-
-
-/* ──────────────────────────────────────────────────────
-   RESPONSIVE — smaller screens
-   ────────────────────────────────────────────────────── */
-@media (max-width: 500px) {
-  .card { padding: 28px 18px 22px; }
-  .card-title { font-size: 1.6rem; }
-  .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .photo-item img { height: 110px; }
-  .deco-gif { width: 80px; height: 80px; }
-  .welcome-title { font-size: 2rem; }
-  .layer-bot { width: 120px; }
-  .layer-mid { width: 96px; }
-  .layer-top { width: 72px; }
-  .cake-plate { width: 140px; }
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-9px); }
 }
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1);    }
+  30%       { transform: scale(1.25); }
+  60%       { transform: scale(0.95); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1);    }
+  50%       { transform: scale(1.07); }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   16. MOBILE  (max-width: 480px) — phones portrait
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .page             { padding: 16px 12px 28px; }
+
+  /* Countdown */
+  .hero-bear-gif    { width: 120px; height: 120px; }
+  .countdown-grid   { gap: 7px; max-width: 100%; }
+  .cd-num           { font-size: 1.35rem; }
+  .cd-label         { font-size: 0.56rem; letter-spacing: 0.7px; }
+  .cd-box           { padding: 10px 3px 8px; border-radius: 12px; }
+
+  /* Welcome */
+  .welcome-title    { font-size: 1.75rem; }
+  .deco-gif         { width: 78px; height: 78px; }
+  .gif-row          { gap: 12px; }
+  .heart-row        { font-size: 1.2rem; gap: 8px; }
+
+  /* Cards */
+  .card             { padding: 20px 13px 17px; border-radius: 20px; }
+  .card-gif         { width: 88px; height: 88px; }
+  .card-title       { font-size: 1.4rem; }
+  .wide-card        { max-width: 100%; }
+
+  /* Paragraphs */
+  .paragraph-section { padding: 13px 12px; }
+  .bday-para         { font-size: 0.85rem; line-height: 1.65; }
+
+  /* Photo grid */
+  .photo-grid       { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .photo-item img   { height: 95px; }
+  .photo-caption    { font-size: 0.68rem; padding: 5px; }
+
+  /* GIF strip */
+  .gif-strip        { gap: 8px; }
+  .gif-strip-item img              { width: 62px; height: 62px; }
+  .gif-strip-final .gif-strip-item img { width: 78px; height: 78px; }
+  .gif-strip-label  { font-size: 0.66rem; }
+
+  /* Cake */
+  .layer-top   { width: 68px;  height: 21px; }
+  .layer-mid   { width: 90px;  height: 25px; }
+  .layer-bot   { width: 114px; height: 29px; }
+  .cake-plate  { width: 132px; height: 11px; }
+  .candle      { width: 8px; height: 21px; }
+  .flame       { width: 10px; height: 13px; top: -13px; }
+  .candles-row { gap: 7px; }
+
+  /* Buttons */
+  .btn-main    { padding: 11px 20px; font-size: 0.87rem; }
+  .btn-back    { padding: 9px 15px;  font-size: 0.78rem; }
+  .nav-btns    { gap: 7px; }
+
+  /* Misc */
+  .fireworks-row { font-size: 0.95rem; letter-spacing: 2px; }
+  .section-sub   { margin-bottom: 11px; font-size: 0.83rem; }
+  .typed-message { font-size: 0.88rem; }
+  .final-gif     { width: 82px; height: 82px; }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   17. TABLET  (481px – 768px) — iPads, large phones landscape
+   ══════════════════════════════════════════════════════ */
+@media (min-width: 481px) and (max-width: 768px) {
+  .page { padding: 20px 20px 30px; }
+
+  /* Countdown */
+  .hero-bear-gif    { width: 140px; height: 140px; }
+  .countdown-grid   { max-width: 340px; gap: 9px; }
+  .cd-num           { font-size: 1.7rem; }
+
+  /* Welcome */
+  .welcome-title    { font-size: 2.2rem; }
+  .deco-gif         { width: 92px; height: 92px; }
+
+  /* Cards */
+  .card     { padding: 26px 20px 22px; }
+  .card-gif { width: 100px; height: 100px; }
+  .wide-card { max-width: 640px; }
+
+  /* Photo grid — 2 cols with taller images */
+  .photo-grid     { grid-template-columns: repeat(2, 1fr); gap: 11px; }
+  .photo-item img { height: 140px; }
+
+  /* GIF strip */
+  .gif-strip-item img              { width: 74px; height: 74px; }
+  .gif-strip-final .gif-strip-item img { width: 92px; height: 92px; }
+
+  /* Cake */
+  .layer-top  { width: 80px;  height: 24px; }
+  .layer-mid  { width: 106px; height: 28px; }
+  .layer-bot  { width: 132px; height: 32px; }
+  .cake-plate { width: 152px; }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   18. LAPTOP / DESKTOP  (769px+)
+   ══════════════════════════════════════════════════════ */
+@media (min-width: 769px) {
+  .page { padding: 32px 24px 40px; }
+
+  /* Countdown */
+  .hero-bear-gif    { width: 170px; height: 170px; }
+  .countdown-grid   { max-width: 400px; gap: 12px; }
+  .cd-num           { font-size: 2.2rem; }
+  .cd-label         { font-size: 0.7rem; }
+
+  /* Welcome */
+  .welcome-title    { font-size: 3rem; }
+  .deco-gif         { width: 112px; height: 112px; }
+
+  /* Cards */
+  .card     { padding: 38px 34px 30px; }
+  .card-gif { width: 128px; height: 128px; }
+  .wide-card { max-width: 700px; }
+
+  /* Photo grid — 4 columns on laptop */
+  .photo-grid     { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .photo-item img { height: 148px; }
+
+  /* GIF strip */
+  .gif-strip-item img              { width: 88px; height: 88px; }
+  .gif-strip-final .gif-strip-item img { width: 108px; height: 108px; }
+
+  /* Cake — full size */
+  .layer-top  { width: 90px;  height: 28px; }
+  .layer-mid  { width: 120px; height: 32px; }
+  .layer-bot  { width: 150px; height: 36px; }
+  .cake-plate { width: 180px; height: 14px; }
+
+  /* Buttons */
+  .btn-main { padding: 14px 38px; font-size: 1.02rem; }
+  .btn-back { padding: 12px 28px; font-size: 0.97rem; }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   19. ULTRA-WIDE  (1200px+) — cap max widths
+   ══════════════════════════════════════════════════════ */
+@media (min-width: 1200px) {
+  .card          { max-width: 500px; }
+  .wide-card     { max-width: 760px; }
+  .page1-content { max-width: 560px; }
+  .welcome-title { font-size: 3.4rem; }
+  .hero-bear-gif { width: 190px; height: 190px; }
+  .photo-grid    { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .photo-item img { height: 168px; }
+  .countdown-grid { max-width: 440px; }
+  .cd-num        { font-size: 2.5rem; }
+}
+
