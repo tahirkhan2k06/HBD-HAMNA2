@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Hamna 🌸</title>
+  <!-- Google Fonts: Pacifico for headings, Nunito for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       CONFETTI CANVAS (sits above everything)
+       ════════════════════════════════════════ -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ════════════════════════════════════════
+       FLOATING HEARTS BACKGROUND
+       ════════════════════════════════════════ -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 1 — WELCOME / LANDING PAGE
+       Click "Enter" button → goes to Page 2
+       ══════════════════════════════════════════════════════ -->
+  <section class="page active" id="page1">
+    <div class="page1-content">
+
+      <!-- ✅ VERIFIED Milk & Mocha GIFs from GIPHY official channel
+           GIF 1: White bear jumps into brown bear's arms — romantic spinning hug with pink hearts
+           GIF 2: White bear holds giant "I love you" pink heart — hearts burst out
+           🔧 CHANGE: swap src with any media#.giphy.com/media/GIF_ID/giphy.gif -->
+      <div class="gif-row">
+        <img
+          class="deco-gif"
+          src="https://media3.giphy.com/media/IzXiddo2twMmdmU8Lv/giphy.gif"
+          alt="Milk and Mocha bear romantic spinning hug with pink hearts"
+        />
+        <img
+          class="deco-gif"
+          src="https://media4.giphy.com/media/SYo1DFS8NLhhqzzjMU/giphy.gif"
+          alt="Milk and Mocha bear I love you pink heart"
+        />
+      </div>
+
+      <!-- Main welcome heading -->
+      <h1 class="welcome-title">Hey Hamna! 🌸</h1>
+      <p class="welcome-sub">Someone very special has a birthday today…</p>
+
+      <!-- Animated pink hearts row -->
+      <div class="heart-row">
+        <span>🌸</span><span>💕</span><span>🌺</span><span>💖</span><span>🌸</span>
+      </div>
+
+      <!-- Click this button to go to page 2 -->
+      <!-- 🔧 CHANGE: Edit button text or onclick to change behaviour -->
+      <button class="btn-main" onclick="goToPage(2)">
+        Open Your Birthday Surprise 🎁
+      </button>
+
+      <p class="hint-text">✨ Click the button above to begin ✨</p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 2 — BIRTHDAY MESSAGE + PARAGRAPH SECTION
+       Click "Next" → goes to Page 3
+       ══════════════════════════════════════════════════════ -->
+  <section class="page" id="page2">
+    <div class="card">
+
+      <!-- ✅ VERIFIED Milk & Mocha GIF — bears dancing happily together with hearts
+           ID: gjHkRHSuHqu99y9Yjt | Source: giphy.com/gifs/milk-and-mocha-bear-gjHkRHSuHqu99y9Yjt
+           🔧 CHANGE: replace GIF ID in URL to use a different one -->
+      <img
+        class="card-gif"
+        src="https://media4.giphy.com/media/gjHkRHSuHqu99y9Yjt/giphy.gif"
+        alt="Milk and Mocha bears dancing with love hearts"
+      />
+
+      <!-- Birthday heading with Hamna's name -->
+      <h2 class="card-title">Happy Birthday,<br/><span class="name-highlight">Hamna!</span> 🎂</h2>
+
+      <!-- ── PARAGRAPH SECTION ──────────────────────────
+           🔧 CHANGE: Edit the paragraph text below freely
+           ──────────────────────────────────────────── -->
+      <div class="paragraph-section">
+        <p class="bday-para">
+          Today is a truly special day — the day the world became a little brighter,
+          a little warmer, and a whole lot more wonderful. <strong>You, Hamna</strong>,
+          bring joy to everyone around you with your beautiful smile and kind heart. 💕
+        </p>
+        <p class="bday-para">
+          On this magical birthday, may every wish you make come true, every dream
+          you chase lead to happiness, and every moment be filled with the people
+          and things you love the most. 🌸🌺
+        </p>
+        <p class="bday-para">
+          Here's to YOU — the most amazing girl — on your most special day! 🎉
+        </p>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goToPage(1)">← Back</button>
+        <button class="btn-main" onclick="goToPage(3)">Next → Pictures 📸</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 3 — PICTURE / PHOTO SECTION
+       Click "Next" → goes to Page 4 (cake)
+       ══════════════════════════════════════════════════════ -->
+  <section class="page" id="page3">
+    <div class="card wide-card">
+
+      <h2 class="card-title">Beautiful Moments 📸</h2>
+      <p class="section-sub">A little gallery just for you, Hamna 🌸</p>
+
+      <!-- ── PICTURE SECTION ────────────────────────────────
+           🔧 CHANGE: Replace src values with Hamna's photos.
+           Example: src="images/hamna1.jpg"
+           Put photos in the same folder as index.html.
+
+           ✅ All verified Milk & Mocha GIFs from official GIPHY channel:
+           Card 1: IzXiddo2twMmdmU8Lv — spinning hug, pink hearts
+           Card 2: SYo1DFS8NLhhqzzjMU — "I love you" heart sign
+           Card 3: 40a8kdO2zfYTEzBuMN — couple love, happy
+           Card 4: 8Fxae36AvVFSpgOTFO — couple cute love
+           ─────────────────────────────────────────────────── -->
+      <div class="photo-grid">
+
+        <!-- Photo 1: White bear jumps into brown bear arms, spins with pink hearts -->
+        <div class="photo-item">
+          <img
+            src="https://media3.giphy.com/media/IzXiddo2twMmdmU8Lv/giphy.gif"
+            alt="Milk and Mocha spinning romantic hug with pink hearts"
+          />
+          <p class="photo-caption">Always loved 🤗💕</p>
+        </div>
+
+        <!-- Photo 2: White bear holds big pink "I love you" heart, hearts burst -->
+        <div class="photo-item">
+          <img
+            src="https://media4.giphy.com/media/SYo1DFS8NLhhqzzjMU/giphy.gif"
+            alt="Milk and Mocha I love you heart"
+          />
+          <p class="photo-caption">I love you! 💖🌸</p>
+        </div>
+
+        <!-- Photo 3: Milk & Mocha couple love, happy together -->
+        <div class="photo-item">
+          <img
+            src="https://media4.giphy.com/media/40a8kdO2zfYTEzBuMN/giphy.gif"
+            alt="Milk and Mocha couple love happy"
+          />
+          <p class="photo-caption">You're beary special 🐻🌸</p>
+        </div>
+
+        <!-- Photo 4: Milk & Mocha cute couple love -->
+        <div class="photo-item">
+          <img
+            src="https://media1.giphy.com/media/8Fxae36AvVFSpgOTFO/giphy.gif"
+            alt="Milk and Mocha cute couple"
+          />
+          <p class="photo-caption">Pure joy & happiness ✨</p>
+        </div>
+
+      </div><!-- end .photo-grid -->
+
+      <!-- ── MILK & MOCHA GIF STRIP ─────────────────────────
+           Extra row below the photos — all verified Milk & Mocha GIFs
+           🔧 CHANGE: swap any ID in the URL to use a different one
+           ─────────────────────────────────────────────────── -->
+      <p class="section-sub" style="margin-top:20px;">With love, always 💌</p>
+      <div class="gif-strip">
+
+        <!-- Couple love happy — bears together with hearts -->
+        <div class="gif-strip-item">
+          <img
+            src="https://media1.giphy.com/media/Sb79pciASiTpvNk3h9/giphy.gif"
+            alt="Milk and Mocha couple love"
+          />
+          <p class="gif-strip-label">Sending love 💖</p>
+        </div>
+
+        <!-- Good morning / sweet — bear with flowers/hearts -->
+        <div class="gif-strip-item">
+          <img
+            src="https://media3.giphy.com/media/KfYxKVIw5LVNI2ZH1s/giphy.gif"
+            alt="Milk and Mocha good morning sweet"
+          />
+          <p class="gif-strip-label">Sweet wishes 🌸</p>
+        </div>
+
+        <!-- There for you — warm bear support hug -->
+        <div class="gif-strip-item">
+          <img
+            src="https://media4.giphy.com/media/eKfpB6WZeKC1DiGrj8/giphy.gif"
+            alt="Milk and Mocha there for you hug"
+          />
+          <p class="gif-strip-label">Always here 🤗</p>
+        </div>
+
+      </div><!-- end .gif-strip -->
+
+      <!-- Navigation buttons -->
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goToPage(2)">← Back</button>
+        <button class="btn-main" onclick="goToPage(4)">Next → Blow the Cake! 🎂</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 4 — INTERACTIVE CAKE: BLOW THE CANDLES!
+       User clicks the cake → candles blow out → message types
+       ══════════════════════════════════════════════════════ -->
+  <section class="page" id="page4">
+    <div class="card">
+
+      <h2 class="card-title">Make a Wish, Hamna! 🌟</h2>
+      <p class="section-sub">Click the cake to blow out the candles 🎂</p>
+
+      <!-- ── INTERACTIVE CAKE ───────────────────────────────
+           The cake is built with pure CSS divs.
+           Clicking it triggers blowCandles() in script.js
+           🔧 CHANGE: edit cake colors in style.css
+                      under the "CAKE STYLES" section
+           ─────────────────────────────────────────────────── -->
+      <div class="cake-container" id="cakeContainer" onclick="blowCandles()">
+
+        <!-- Candles row — JS adds class 'blown' to hide flames -->
+        <div class="candles-row" id="candlesRow">
+          <!-- Each candle has a .flame div inside -->
+          <div class="candle" id="c1"><div class="flame" id="f1"></div></div>
+          <div class="candle" id="c2"><div class="flame" id="f2"></div></div>
+          <div class="candle" id="c3"><div class="flame" id="f3"></div></div>
+          <div class="candle" id="c4"><div class="flame" id="f4"></div></div>
+          <div class="candle" id="c5"><div class="flame" id="f5"></div></div>
+        </div>
+
+        <!-- Cake layers (bottom = layer1, top = layer3) -->
+        <div class="cake-body">
+          <div class="cake-layer layer-top">
+            <div class="frosting"></div>
+          </div>
+          <div class="cake-layer layer-mid">
+            <div class="frosting"></div>
+          </div>
+          <div class="cake-layer layer-bot">
+            <div class="frosting"></div>
+          </div>
+          <!-- Decorative dots on cake -->
+          <div class="dots">
+            <span>🌸</span><span>💕</span><span>🌸</span><span>💕</span><span>🌸</span>
+          </div>
+        </div>
+
+        <!-- Plate under cake -->
+        <div class="cake-plate"></div>
+
+        <!-- Hint label (disappears after blow) -->
+        <p class="cake-hint" id="cakeHint">👆 Click to blow!</p>
+      </div><!-- end .cake-container -->
+
+      <!-- ── BIRTHDAY MESSAGE ───────────────────────────────
+           This appears letter by letter after candles blow out
+           🔧 CHANGE: edit the message string in script.js
+                      look for: const BIRTHDAY_MESSAGE = "..."
+           ─────────────────────────────────────────────────── -->
+      <div class="typed-message-wrap" id="typedWrap">
+        <p class="typed-message" id="typedMsg"></p>
+      </div>
+
+      <!-- ✅ VERIFIED Milk & Mocha GIF — couple love happy (3q4RQY6Y8C4UpClP4U)
+           Bears celebrating joyfully — appears after candles blown
+           🔧 CHANGE: replace GIF ID to use a different one -->
+      <img
+        class="final-gif hidden"
+        id="finalGif"
+        src="https://media3.giphy.com/media/3q4RQY6Y8C4UpClP4U/giphy.gif"
+        alt="Milk and Mocha bears celebrating love"
+      />
+
+      <!-- Navigation -->
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goToPage(3)">← Back</button>
+        <button class="btn-main" onclick="goToPage(5)">Final Surprise! 💌</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 5 — FINAL SURPRISE / CLOSING PAGE
+       ══════════════════════════════════════════════════════ -->
+  <section class="page" id="page5">
+    <div class="card">
+
+      <!-- ✅ VERIFIED Milk & Mocha GIF — white bear on bouncing pink heart
+           ID: kfRKF0iqA8jyDqq1nH | Official milkmochabear sticker
+           🔧 CHANGE: replace GIF ID in URL -->
+      <img
+        class="card-gif"
+        src="https://media4.giphy.com/media/kfRKF0iqA8jyDqq1nH/giphy.gif"
+        alt="Milk and Mocha bear on pink heart"
+      />
+
+      <h2 class="card-title">With All Our Love 💖</h2>
+
+      <!-- ── FINAL MESSAGE SECTION ──────────────────────────
+           🔧 CHANGE: Edit the closing message below
+           ──────────────────────────────────────────────── -->
+      <div class="paragraph-section">
+        <p class="bday-para final-para">
+          Hamna, you deserve all the beautiful things life has to offer.
+          May this birthday mark the beginning of your happiest chapter yet.
+        </p>
+        <p class="bday-para final-para">
+          Always keep smiling, keep shining, and never forget how truly
+          loved you are. 💕🌸
+        </p>
+      </div>
+
+      <!-- ── MILK & MOCHA CLOSING GIF STRIP ───────────────────
+           All verified from official milkmochabear GIPHY channel
+           GIF 1: gjHkRHSuHqu99y9Yjt — love dance
+           GIF 2: SYo1DFS8NLhhqzzjMU — I love you heart
+           GIF 3: IzXiddo2twMmdmU8Lv — spinning hug
+           🔧 CHANGE: swap IDs freely
+           ─────────────────────────────────────────────────── -->
+      <div class="gif-strip gif-strip-final">
+        <div class="gif-strip-item">
+          <img src="https://media4.giphy.com/media/gjHkRHSuHqu99y9Yjt/giphy.gif" alt="Milk and Mocha love dance"/>
+        </div>
+        <div class="gif-strip-item">
+          <img src="https://media4.giphy.com/media/SYo1DFS8NLhhqzzjMU/giphy.gif" alt="Milk and Mocha I love you"/>
+        </div>
+        <div class="gif-strip-item">
+          <img src="https://media3.giphy.com/media/IzXiddo2twMmdmU8Lv/giphy.gif" alt="Milk and Mocha spinning hug"/>
+        </div>
+      </div>
+
+      <!-- Emoji fireworks row -->
+      <div class="fireworks-row">
+        🎉🎊🌸💖🎂🌟💕🎁🌺✨
+      </div>
+
+      <!-- Replay button — restarts from page 1 -->
+      <button class="btn-main" onclick="goToPage(1)" style="margin-top:24px;">
+        🔄 Replay from Start
+      </button>
+
+      <div class="nav-btns" style="margin-top:12px;">
+        <button class="btn-back" onclick="goToPage(4)">← Back</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Load JavaScript last so DOM is ready -->
+  <script src="script.js"></script>
+</body>
+</html>
