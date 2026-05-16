@@ -21,10 +21,67 @@
   <div class="hearts-bg" id="heartsBg"></div>
 
   <!-- ══════════════════════════════════════════════════════
+       PAGE 0 — COUNTDOWN PAGE (shown first!)
+       Live countdown to May 24 PKT + bear GIF
+       Click button → goes to Page 1
+       ══════════════════════════════════════════════════════ -->
+  <section class="page active" id="page0">
+    <div class="page1-content">
+
+      <!-- ✅ Exact Milk & Mocha white bear with flying pink hearts
+           Source: tenor.com/view/milk-and-mocha-bears-happy-hearts-hug-gif-14669516
+           🔧 CHANGE: swap src to any other GIF URL -->
+      <img
+        class="hero-bear-gif"
+        src="https://media1.tenor.com/m/vdfF_FJaghQAAAAd/milk-and-mocha-bears-happy.gif"
+        alt="Milk and Mocha white bear surrounded by flying pink hearts"
+      />
+
+      <h1 class="welcome-title">Hamna's Birthday 🌸</h1>
+      <p class="welcome-sub">The big day is almost here…</p>
+
+      <!-- ── LIVE COUNTDOWN ────────────────────────────────
+           Counts down in real time to May 24 PKT
+           🔧 CHANGE: Edit BIRTHDAY_DATE in script.js
+           ─────────────────────────────────────────────────── -->
+      <div class="countdown-grid" id="countdownGrid">
+        <div class="cd-box">
+          <div class="cd-num" id="cdDays">--</div>
+          <div class="cd-label">Days</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdHours">--</div>
+          <div class="cd-label">Hours</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdMins">--</div>
+          <div class="cd-label">Mins</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdSecs">--</div>
+          <div class="cd-label">Secs</div>
+        </div>
+      </div>
+
+      <!-- Shown when birthday has arrived (countdown hits zero) -->
+      <p class="birthday-arrived hidden" id="birthdayArrived">🎉 Today is Hamna's Birthday! 🎉</p>
+
+      <div class="heart-row">
+        <span>🌸</span><span>💕</span><span>🌺</span><span>💖</span><span>🌸</span>
+      </div>
+
+      <button class="btn-main" onclick="goToPage(1)">Open Birthday Surprise 🎁</button>
+      <p class="hint-text">✨ Click to begin ✨</p>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
        PAGE 1 — WELCOME / LANDING PAGE
        Click "Enter" button → goes to Page 2
        ══════════════════════════════════════════════════════ -->
-  <section class="page active" id="page1">
+  <section class="page" id="page1">
     <div class="page1-content">
 
       <!-- ✅ VERIFIED Milk & Mocha GIFs from GIPHY official channel
@@ -60,6 +117,9 @@
       </button>
 
       <p class="hint-text">✨ Click the button above to begin ✨</p>
+      <div class="nav-btns" style="margin-top:12px;">
+        <button class="btn-back" onclick="goToPage(0)">← Back to Countdown</button>
+      </div>
     </div>
   </section>
 
